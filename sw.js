@@ -10,19 +10,20 @@
  *   the cache.
  */
 'use strict';
-const CACHE = "galvanic-corrosion-checker-62576d2176b9";
+const CACHE = "galvanic-corrosion-checker-9ee14bc5b650";
 const PREFIX = "galvanic-corrosion-checker-";
 const FILES = [
   "css/style.css",
   "de/",
   "es/",
-  "icons/apple-touch-icon.png",
+  "icons/app-icon-180.png",
+  "icons/app-icon-192.png",
+  "icons/app-icon-512.png",
+  "icons/app-icon-maskable-512.png",
+  "icons/app-icon.svg",
   "icons/favicon-16.png",
   "icons/favicon-32.png",
   "icons/favicon.svg",
-  "icons/icon-192.png",
-  "icons/icon-512.png",
-  "icons/icon-maskable-512.png",
   "./",
   "js/app.js",
   "js/calc.js",
