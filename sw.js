@@ -10,7 +10,7 @@
  *   the cache.
  */
 'use strict';
-const CACHE = "galvanic-corrosion-checker-c47e7682da44";
+const CACHE = "galvanic-corrosion-checker-62576d2176b9";
 const PREFIX = "galvanic-corrosion-checker-";
 const FILES = [
   "css/style.css",
