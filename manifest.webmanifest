@@ -1,5 +1,5 @@
 {
-  "id": "./",
+  "id": "/galvanic-corrosion-checker/",
   "name": "Galvanic Corrosion Checker",
   "short_name": "Galvanic",
   "description": "Check the galvanic corrosion risk of two materials in contact.",
