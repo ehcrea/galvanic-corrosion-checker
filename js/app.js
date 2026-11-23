@@ -101,17 +101,29 @@
     const X = (v) => x0 + (Math.min(v, max) / max) * (x1 - x0);
     const segs = [[0, s[0], 'low'], [s[0], s[1], 'moderate'], [s[1], s[2], 'high'], [s[2], max, 'severe']];
     let svg = `<svg viewBox="0 0 ${W} 84" role="img" aria-label="${esc(t('Risk meter'))}: ΔE ${dV(r.dE)}, ${esc(riskName(r.level))}">`;
+    const labels = [];
     segs.forEach(([a, b, c], i) => {
       const xa = X(a), xb = X(b);
       const rx = i === 0 || i === 3 ? 6 : 0;
       svg += `<rect class="seg-${c}" x="${xa}" y="${y}" width="${Math.max(0, xb - xa)}" height="${h}" ${rx ? `rx="${rx}"` : ''}/>`;
-      if (xb - xa > 50) svg += `<text class="seg-label" x="${(xa + xb) / 2}" y="${y + 15}" text-anchor="middle">${esc(lvlName(i))}</text>`;
+      labels.push([xa, xb, lvlName(i)]);
     });
     // square inner corners of the end segments
     svg += `<rect class="seg-low" x="${X(s[0]) - 6}" y="${y}" width="6" height="${h}"/><rect class="seg-severe" x="${X(s[2])}" y="${y}" width="6" height="${h}"/>`;
     [0, ...s, max].forEach((v) => { svg += `<text class="tick" x="${X(v)}" y="${y + h + 16}" text-anchor="middle">${num(v)}</text>`; });
     if (!r.same) svg += `<rect class="band" x="${X(r.dEmin)}" y="${y - 4}" width="${Math.max(2, X(r.dEmax) - X(r.dEmin))}" height="${h + 8}" rx="3"/>`;
     const mx = X(r.dE);
+    // level names: drawn over the band, and moved aside (or left out) where the marker line would cross them
+    labels.forEach(([xa, xb, name]) => {
+      const w = name.length * 6.6 + 8;
+      let cx = (xa + xb) / 2;
+      if (Math.abs(cx - mx) < w / 2 + 3) {
+        const left = mx - 3 - xa, right = xb - mx - 3;
+        if (Math.max(left, right) < w) return;
+        cx = left >= right ? xa + left / 2 : mx + 3 + right / 2;
+      } else if (xb - xa < w) return;
+      svg += `<text class="seg-label" x="${cx}" y="${y + 15}" text-anchor="middle">${esc(name)}</text>`;
+    });
     svg += `<path class="marker" d="M${mx - 7} ${y - 14}h14l-7 11z"/><rect class="marker" x="${mx - 1}" y="${y - 4}" width="2" height="${h + 8}"/>`;
     const anchor = mx < 60 ? 'start' : mx > W - 60 ? 'end' : 'middle';
     svg += `<text class="marker-text" x="${mx}" y="${y - 18}" text-anchor="${anchor}">ΔE ${dV(r.dE)}</text>`;

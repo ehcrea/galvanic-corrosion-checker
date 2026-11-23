@@ -449,3 +449,15 @@ input, select, textarea { max-width: 100%; }
 /* Theme switch: square icon button with the icon exactly centred (same in every ehcrea
    calculator). ".toolbar .btn" padding must not apply to it, or the 16 px icon is pushed right. */
 .toolbar .btn-icon, #theme { width: 32px; height: 32px; padding: 0; display: inline-grid; place-items: center; }
+
+/* Risk chip in the flow, above the anode / cathode details, so it never covers them */
+@media (min-width: 641px) {
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "main chip" "main side"; align-items: start; row-gap: 8px; }
+  .hero-main { grid-area: main; padding-right: 0; align-self: center; }
+  .status-chip { grid-area: chip; position: static; justify-self: end; }
+  .hero-side { grid-area: side; }
+}
+@media (min-width: 641px) and (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; grid-template-areas: "chip" "main" "side"; }
+  .status-chip { justify-self: start; }
+}
